@@ -1,0 +1,1983 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NexusPlay — 108+ HTML5 Gaming Portal & Monetization Studio</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background-color: #090d16; color: #f1f5f9; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+    .game-card { transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease; }
+    .game-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px -6px rgba(99, 102, 241, 0.35); border-color: #6366f1; }
+    .ad-slot-pattern {
+      background-image: radial-gradient(rgba(99, 102, 241, 0.16) 1px, transparent 1px);
+      background-size: 14px 14px;
+    }
+    .touch-btn { user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+    .touch-btn:active { transform: scale(0.93); background-color: #4f46e5 !important; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3">
+        <button id="brandHomeBtn" type="button" class="flex items-center gap-2.5 text-left group focus:outline-none">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="portalBrandTitle" class="text-lg sm:text-xl font-black tracking-tight bg-gradient-to-r from-white via-indigo-200 to-purple-300 bg-clip-text text-transparent">NEXUS ARCADE</span>
+              <span id="totalGameBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">108 GAMES</span>
+            </div>
+            <p class="text-[11px] text-slate-400 hidden sm:block">Instant HTML5 Gaming Portal & Publisher Hub</p>
+          </div>
+        </button>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="flex-1 max-w-md mx-2 order-3 sm:order-2 w-full sm:w-auto">
+        <div class="relative">
+          <input id="searchInput" type="text" placeholder="Search 108+ games (e.g., Cyber Snake, 2048, Racing, Sniper)..."
+            class="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-800/90 border border-slate-700 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.15 6.15z" />
+          </svg>
+          <button id="clearSearchBtn" type="button" class="hidden absolute right-2.5 top-2 text-slate-400 hover:text-white text-xs px-1">✕</button>
+        </div>
+      </div>
+
+      <!-- Primary View Switchers & Wallet -->
+      <div class="flex items-center gap-2 order-2 sm:order-3">
+        <!-- Coins / Rewards Pill -->
+        <button id="watchRewardAdBtn" type="button" title="Watch 5s Rewarded Ad for +50 Coins"
+          class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 hover:bg-amber-500/25 text-xs font-bold transition">
+          <span>🪙</span>
+          <span id="userCoinsDisplay">250</span>
+          <span class="text-[10px] bg-amber-500/30 px-1.5 py-0.5 rounded text-amber-200">+50 Ad</span>
+        </button>
+
+        <!-- Sound Toggle -->
+        <button id="soundToggleBtn" type="button" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold transition" title="Toggle Arcade Sound">
+          🔊 SFX On
+        </button>
+
+        <!-- Navigation Tabs -->
+        <button id="navCatalogBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm transition">
+          🎮 Games
+        </button>
+        <button id="navPublishBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+          ➕ Publish Game
+        </button>
+        <button id="navMonetizeBtn" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 transition">
+          💰 Monetize & Deploy
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TOP LEADERBOARD AD SLOT (728x90) -->
+  <div id="topAdBannerWrapper" class="bg-slate-900/60 border-b border-slate-800/80 py-2 px-3">
+    <div class="max-w-4xl mx-auto rounded-xl border border-dashed border-indigo-500/40 ad-slot-pattern px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Ad Slot • 728×90 Leaderboard</span>
+        <span id="topAdNetworkLabel" class="text-xs text-slate-300 font-medium">Adsterra / Google AdSense H5 Banner Ready — High CTR Placement</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-[11px] text-emerald-400 font-semibold" id="estSessionRevBadge">Est. Session RPM: $4.20</span>
+        <button id="configureTopAdBtn" type="button" class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white border border-slate-700 transition">
+          Configure Ad Code
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT AREA -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-5">
+
+    <!-- ==================== VIEW 1: GAME CATALOG ==================== -->
+    <section id="viewCatalog" class="space-y-5">
+
+      <!-- Hero Banner + Quick Stats -->
+      <div class="rounded-2xl bg-gradient-to-r from-indigo-950/90 via-slate-900 to-purple-950/90 border border-indigo-500/30 p-4 sm:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div class="space-y-1.5 max-w-2xl">
+          <div class="inline-flex items-center gap-2 text-xs font-bold text-indigo-300 bg-indigo-500/15 border border-indigo-500/30 px-2.5 py-0.5 rounded-full">
+            <span>⚡ Instant Play</span>
+            <span>•</span>
+            <span>Mobile, Tablet & Desktop Controls</span>
+            <span>•</span>
+            <span>Ad-Ready Portal</span>
+          </div>
+          <h1 class="text-xl sm:text-2xl font-black text-white">Play 108+ Instant HTML5 Arcade Games or Import Your Own</h1>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Every game runs natively at 60 FPS with keyboard & touch controls, local high scores, pre-roll interstitial ad simulation, and one-click HTML export for Netlify, GitHub Pages, or Cloudflare Pages.
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
+          <button id="surpriseGameBtn" type="button" class="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold text-xs sm:text-sm shadow-lg shadow-indigo-500/25 transition">
+            🎲 Play Random Game
+          </button>
+          <button id="heroPublishBtn" type="button" class="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 font-bold text-xs sm:text-sm border border-slate-700 transition">
+            ➕ Embed External Game
+          </button>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills & Sort Controls -->
+      <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+        <div id="categoryPillsContainer" class="flex items-center gap-1.5 overflow-x-auto pb-1">
+          <!-- Populated dynamically -->
+        </div>
+        <div class="flex items-center gap-2 self-end md:self-auto">
+          <label for="sortSelect" class="text-xs text-slate-400 font-medium">Sort:</label>
+          <select id="sortSelect" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-200 focus:outline-none focus:border-indigo-500">
+            <option value="popular">🔥 Most Popular</option>
+            <option value="rating">⭐ Highest Rated</option>
+            <option value="highscore">🏆 My High Scores</option>
+            <option value="az">🔤 Name (A–Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Active Filter Status Bar -->
+      <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+        <span id="catalogCountLabel">Showing all 108 playable games</span>
+        <button id="resetFiltersBtn" type="button" class="text-indigo-400 hover:text-indigo-300 font-semibold hidden">Reset Filters</button>
+      </div>
+
+      <!-- Games Grid -->
+      <div id="gamesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- Mid-Page Native Ad Banner -->
+      <div id="footerAdBannerWrapper" class="rounded-2xl border border-dashed border-emerald-500/40 ad-slot-pattern p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="text-[10px] font-extrabold uppercase px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Native Ad • 970×250</span>
+          <div>
+            <p class="text-xs sm:text-sm font-bold text-white">Monetize Your Gaming Traffic with GameMonetize, Adsterra & Poki SDK</p>
+            <p class="text-xs text-slate-400">Earn $2–$12 RPM from interstitial pre-rolls, rewarded coins, and sticky display banners.</p>
+          </div>
+        </div>
+        <button id="openMonetizeFromBannerBtn" type="button" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs whitespace-nowrap transition">
+          Open Revenue Calculator →
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: ACTIVE GAME PLAYER MODAL / STAGE ==================== -->
+    <section id="viewPlayer" class="hidden space-y-4">
+      <!-- Top Player Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-900 border border-slate-800 rounded-2xl p-3 sm:px-5">
+        <div class="flex items-center gap-3">
+          <button id="backToCatalogBtn" type="button" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 transition">
+            ← Back to 108 Games
+          </button>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 id="playerGameTitle" class="text-base sm:text-lg font-black text-white">Cyber Snake</h2>
+              <span id="playerGameCategory" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300">Snake</span>
+            </div>
+            <p id="playerGameDesc" class="text-xs text-slate-400">Collect neon energy cores without hitting walls or your trail.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <div class="px-3 py-1 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+            <span class="text-slate-400">Score:</span>
+            <span id="liveScoreDisplay" class="font-black text-indigo-400 ml-1">0</span>
+          </div>
+          <div class="px-3 py-1 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+            <span class="text-slate-400">Best:</span>
+            <span id="bestScoreDisplay" class="font-black text-amber-400 ml-1">0</span>
+          </div>
+          <button id="favoriteGameBtn" type="button" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold transition" title="Favorite Game">
+            ☆ Save
+          </button>
+          <button id="pauseGameBtn" type="button" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 transition">
+            ⏸ Pause
+          </button>
+          <button id="restartGameBtn" type="button" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition">
+            ↻ Restart
+          </button>
+        </div>
+      </div>
+
+      <!-- Player Grid: Game Canvas + Sidebar Ad & Controls -->
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <!-- Main Stage (3 cols) -->
+        <div class="lg:col-span-3 flex flex-col gap-3">
+          <div id="canvasContainer" class="relative w-full h-[380px] sm:h-[460px] bg-slate-950 rounded-2xl border-2 border-slate-800 overflow-hidden flex items-center justify-center shadow-2xl">
+            <!-- HTML5 Game Canvas -->
+            <canvas id="gameCanvas" class="w-full h-full block"></canvas>
+
+            <!-- External Iframe Container (for custom imported games) -->
+            <iframe id="externalGameIframe" title="External Game Player" class="hidden w-full h-full border-0" sandbox="allow-scripts allow-same-origin allow-pointer-lock"></iframe>
+
+            <!-- Pre-Roll Interstitial Ad Overlay -->
+            <div id="prerollAdOverlay" class="hidden absolute inset-0 z-30 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center">
+              <span class="text-[11px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 mb-3">
+                Sponsored Pre-Roll Ad Simulator (GameMonetize / H5 AdSense)
+              </span>
+              <div class="max-w-md w-full rounded-2xl bg-gradient-to-br from-indigo-900/60 to-purple-900/60 border border-indigo-500/40 p-6 space-y-3 shadow-xl">
+                <div class="text-3xl">🚀</div>
+                <h3 class="text-lg font-black text-white">NexusCloud Pro — Zero-Cost Static Game Hosting</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Monetize every game launch with high-eCPM HTML5 video pre-rolls. Publishers earn 65%–80% revenue share automatically.
+                </p>
+                <div class="pt-2 flex items-center justify-center gap-3">
+                  <button id="skipPrerollBtn" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition">
+                    Skip Ad & Start Game
+                  </button>
+                </div>
+                <p id="prerollCountdownText" class="text-[11px] text-slate-400">Ad auto-closes in 3s...</p>
+              </div>
+            </div>
+
+            <!-- Game Over / Victory Overlay -->
+            <div id="gameOverOverlay" class="hidden absolute inset-0 z-20 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center">
+              <h3 id="gameOverHeading" class="text-2xl font-black text-white mb-1">GAME OVER</h3>
+              <p id="gameOverSubtext" class="text-sm text-slate-300 mb-4">Final Score: 0</p>
+              <div class="flex flex-wrap items-center justify-center gap-3">
+                <button id="playAgainOverlayBtn" type="button" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg transition">
+                  ▶ Play Again
+                </button>
+                <button id="continueWithAdBtn" type="button" class="px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-bold text-xs transition">
+                  📺 Watch Rewarded Ad (+Continue & +25 Coins)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ON-SCREEN TOUCH / TABLET CONTROLS -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-1.5">
+              <button id="touchLeftBtn" type="button" class="touch-btn w-12 h-11 rounded-xl bg-slate-800 border border-slate-700 font-black text-base text-white flex items-center justify-center">◀</button>
+              <button id="touchUpBtn" type="button" class="touch-btn w-12 h-11 rounded-xl bg-slate-800 border border-slate-700 font-black text-base text-white flex items-center justify-center">▲</button>
+              <button id="touchDownBtn" type="button" class="touch-btn w-12 h-11 rounded-xl bg-slate-800 border border-slate-700 font-black text-base text-white flex items-center justify-center">▼</button>
+              <button id="touchRightBtn" type="button" class="touch-btn w-12 h-11 rounded-xl bg-slate-800 border border-slate-700 font-black text-base text-white flex items-center justify-center">▶</button>
+            </div>
+            <div class="text-xs text-slate-400 hidden sm:block">
+              <span class="font-semibold text-slate-200">Controls:</span> Arrow Keys / WASD / Tap Canvas or Touch Buttons
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="touchActionBtn" type="button" class="touch-btn px-5 h-11 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 font-black text-xs uppercase tracking-wider text-white shadow-md">
+                ⚡ ACTION / FIRE / JUMP
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar (1 col): 300x250 Ad + Similar Games -->
+        <div class="space-y-4">
+          <!-- 300x250 Medium Rectangle Ad Slot -->
+          <div class="rounded-2xl border border-dashed border-indigo-500/40 ad-slot-pattern p-4 flex flex-col justify-between min-h-[210px]">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">Ad Slot • 300×250</span>
+              <span class="text-[11px] text-emerald-400 font-bold">High Viewability</span>
+            </div>
+            <div class="my-auto py-3 text-center space-y-1.5">
+              <p class="text-sm font-extrabold text-white">Sidebar Companion Ad</p>
+              <p class="text-xs text-slate-400">Stays visible alongside gameplay on desktop & landscape tablets.</p>
+            </div>
+            <div class="flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-800 pt-2">
+              <span>Impressions this session:</span>
+              <span id="adImpressionCounter" class="font-bold text-slate-200">1</span>
+            </div>
+          </div>
+
+          <!-- Similar Games in Category -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
+            <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-400">More Games in Category</h3>
+            <div id="relatedGamesList" class="space-y-2">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: PUBLISH / IMPORT GAME STUDIO ==================== -->
+    <section id="viewPublish" class="hidden max-w-3xl mx-auto space-y-5">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4">
+        <div>
+          <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Publisher Content CMS</span>
+          <h2 class="text-xl font-black text-white mt-0.5">Add or Embed New HTML5 Games</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            Expand your catalog beyond 108 games! Paste any HTML5 game embed URL from GameMonetize, GameDistribution, Itch.io, or select a built-in procedural engine template.
+          </p>
+        </div>
+
+        <form id="publishGameForm" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="newGameTitle" class="block text-xs font-bold text-slate-300 mb-1">Game Title *</label>
+              <input id="newGameTitle" type="text" required placeholder="e.g., Cyber Drift 3000"
+                class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-indigo-500">
+            </div>
+            <div>
+              <label for="newGameCategory" class="block text-xs font-bold text-slate-300 mb-1">Category *</label>
+              <select id="newGameCategory" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-indigo-500">
+                <option value="Arcade">Arcade</option>
+                <option value="Shooter">Shooter</option>
+                <option value="Snake">Snake</option>
+                <option value="Breakout">Breakout</option>
+                <option value="Racing">Racing</option>
+                <option value="Puzzle">Puzzle</option>
+                <option value="Platformer">Platformer</option>
+                <option value="Reflex">Reflex</option>
+                <option value="Strategy">Strategy</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="newGameSourceType" class="block text-xs font-bold text-slate-300 mb-1">Game Source Mode</label>
+              <select id="newGameSourceType" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-indigo-500">
+                <option value="engine">Built-in 60FPS Canvas Engine</option>
+                <option value="iframe">External HTML5 Game Iframe URL (GameMonetize / Web)</option>
+              </select>
+            </div>
+            <div>
+              <label for="newGameEmoji" class="block text-xs font-bold text-slate-300 mb-1">Card Icon / Emoji</label>
+              <input id="newGameEmoji" type="text" value="🚀" maxlength="4"
+                class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <div id="iframeUrlInputGroup" class="hidden">
+            <label for="newGameIframeUrl" class="block text-xs font-bold text-slate-300 mb-1">HTTPS Game Embed URL</label>
+            <input id="newGameIframeUrl" type="url" placeholder="https://html5.gamemonetize.co/..."
+              class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div>
+            <label for="newGameDesc" class="block text-xs font-bold text-slate-300 mb-1">Short Description</label>
+            <input id="newGameDesc" type="text" placeholder="Fast-paced neon arcade challenge with high-score leaderboards."
+              class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="flex items-center justify-end gap-3 pt-2">
+            <button id="submitPublishGameBtn" type="submit" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm shadow-lg transition">
+              🚀 Publish Game to Portal
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: MONETIZATION & DEPLOYMENT HUB ==================== -->
+    <section id="viewMonetize" class="hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <!-- Ad Network Configuration (2 cols) -->
+        <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Ad Network Integration</span>
+              <h2 class="text-lg sm:text-xl font-black text-white">Configure Portal Branding & Ad Networks</h2>
+            </div>
+            <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Ready for Production</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="configSiteName" class="block text-xs font-bold text-slate-300 mb-1">Portal Brand Name</label>
+              <input id="configSiteName" type="text" value="NEXUS ARCADE"
+                class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white">
+            </div>
+            <div>
+              <label for="configAdNetworkSelect" class="block text-xs font-bold text-slate-300 mb-1">Primary Ad Network</label>
+              <select id="configAdNetworkSelect" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white">
+                <option value="Adsterra + GameMonetize SDK">Adsterra + GameMonetize SDK (Instant Approval)</option>
+                <option value="Google AdSense for H5 Games">Google AdSense for H5 Games</option>
+                <option value="GameDistribution Publisher SDK">GameDistribution Publisher SDK</option>
+                <option value="Poki / CrazyGames Revenue Share">Poki / CrazyGames Revenue Share</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="configPubId" class="block text-xs font-bold text-slate-300 mb-1">Publisher / Ad Unit ID</label>
+              <input id="configPubId" type="text" placeholder="pub-XXXXXXXXXXXXXXXX or GM-Key"
+                class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-700 text-sm text-white">
+            </div>
+            <div class="flex items-end gap-2">
+              <label class="flex items-center gap-2 text-xs text-slate-200 cursor-pointer py-2">
+                <input id="togglePrerollCheckbox" type="checkbox" checked class="rounded bg-slate-800 border-slate-600 text-indigo-600">
+                <span>Enable Pre-Roll Interstitial Ads Before Games</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button id="saveMonetizeConfigBtn" type="button" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm transition">
+              💾 Save Monetization Settings
+            </button>
+            <button id="exportStandaloneHtmlBtn" type="button" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm transition">
+              ⬇ Download Ready-to-Publish index.html
+            </button>
+          </div>
+        </div>
+
+        <!-- Revenue Estimator Card (1 col) -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div>
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Earnings Simulator</span>
+            <h3 class="text-lg font-black text-white">Portal Revenue Calculator</h3>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-slate-400">Daily Active Players:</span>
+                <span id="calcPlayersVal" class="font-bold text-white">5,000</span>
+              </div>
+              <input id="calcPlayersSlider" type="range" min="500" max="100000" step="500" value="5000" class="w-full accent-indigo-500">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-slate-400">Avg. Ad Impressions / Player:</span>
+                <span id="calcImprVal" class="font-bold text-white">4</span>
+              </div>
+              <input id="calcImprSlider" type="range" min="1" max="12" step="1" value="4" class="w-full accent-indigo-500">
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-slate-400">Blended eCPM ($ USD):</span>
+                <span id="calcEcpmVal" class="font-bold text-emerald-400">$3.50</span>
+              </div>
+              <input id="calcEcpmSlider" type="range" min="0.5" max="12" step="0.5" value="3.5" class="w-full accent-emerald-500">
+            </div>
+          </div>
+
+          <div class="rounded-xl bg-slate-950 border border-slate-800 p-3.5 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-400">Estimated Daily Revenue:</span>
+              <span id="estDailyRev" class="font-black text-emerald-400 text-sm">$70.00 / day</span>
+            </div>
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-400">Projected Monthly Revenue:</span>
+              <span id="estMonthlyRev" class="font-black text-amber-300 text-base">$2,100 / mo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Free Hosting & Monetization Step-by-Step Guide -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+          <div class="text-xs font-extrabold text-indigo-400 uppercase">Step 1 • Free Hosting</div>
+          <h4 class="text-sm font-bold text-white">Deploy on Netlify, Vercel, or Cloudflare Pages</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Click <strong>Download Ready-to-Publish index.html</strong> above and drag-and-drop the folder into Netlify Drop or push via Termux Git to GitHub Pages for free global CDN hosting.
+          </p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+          <div class="text-xs font-extrabold text-emerald-400 uppercase">Step 2 • Ad Networks</div>
+          <h4 class="text-sm font-bold text-white">Connect Adsterra, GameMonetize & AdSense</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Start immediately with <strong>Adsterra</strong> (no minimum traffic) and <strong>GameMonetize.com</strong> for HTML5 pre-roll ads, then apply for Google AdSense H5 Games API once traffic scales.
+          </p>
+        </div>
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-2">
+          <div class="text-xs font-extrabold text-purple-400 uppercase">Step 3 • Traffic & SEO</div>
+          <h4 class="text-sm font-bold text-white">Short-Form Gameplay Reels & School/Arcade SEO</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Record 15-second gameplay clips from your top games for Instagram Reels & YouTube Shorts with your portal link in bio to drive organic players at $0 ad spend.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-4 right-4 z-50 hidden px-4 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold shadow-xl border border-indigo-400/30">
+    Saved!
+  </div>
+
+  <!-- APPLICATION SCRIPT -->
+  <script>
+    (function() {
+      // ==================== 1. GENERATE 108 UNIQUE PLAYABLE GAMES ====================
+      const CATEGORY_DEFINITIONS = [
+        {
+          category: 'Arcade',
+          engine: 'flappy',
+          icon: '🦅',
+          color: 'from-indigo-500 to-blue-600',
+          titles: [
+            ['Neon Wing', 'Tap or press Space to fly through cyber laser gates.'],
+            ['Gravity Glider', 'High-gravity jetpack run through narrow reactor pipes.'],
+            ['Astro Hopper', 'Low-gravity orbital hop with fast-moving plasma pillars.'],
+            ['Tunnel Dash', 'Ultra-fast corridor flight with tight vertical gaps.'],
+            ['Cyber Bat', 'Sonar-powered cave flyer dodging stalactite barriers.'],
+            ['Drone Escape', 'Steer a rogue micro-drone out of the security grid.'],
+            ['Plasma Flyer', 'Supercharged thruster bird with double-score rings.'],
+            ['Spike Jumper', 'precision aerial dodger with rapid pillar waves.'],
+            ['Hyper Falcon', 'Supersonic arcade flight for veteran reflex players.'],
+            ['Void Skimmer', 'Glide across dark-matter rifts without touching edges.'],
+            ['Mecha Sparrow', 'Heavy armor flyer with strong downward momentum.'],
+            ['Quantum Bird', 'Phase through oscillating neon barriers at high speed.']
+          ]
+        },
+        {
+          category: 'Shooter',
+          engine: 'shooter',
+          icon: '🚀',
+          color: 'from-purple-500 to-pink-600',
+          titles: [
+            ['Star Defender', 'Blast incoming alien squadrons in deep space.'],
+            ['Alien Swarm', 'Rapid-fire defense against relentless insectoid waves.'],
+            ['Meteor Storm', 'Shatter giant tumbling asteroids before impact.'],
+            ['Galactica X', 'Classic arcade starfighter vs. formation cruisers.'],
+            ['Twin Blaster', 'Dual-cannon interceptor with high fire rate.'],
+            ['Nova Strike', 'Defend the orbital station from kamikaze drones.'],
+            ['Void Cruiser', 'Heavy dreadnought battle in Sector 9.'],
+            ['Plasma Siege', 'Hold the line against armored crimson invaders.'],
+            ['Orbital Guard', 'Protect Earths shield grid from falling debris.'],
+            ['Drone Wars', 'High-speed dogfight against autonomous AI fighters.'],
+            ['Sector Zero', 'Survive endless bullet-hell waves in deep space.'],
+            ['Boss Armada', 'Elite fleet wave challenge with armored targets.']
+          ]
+        },
+        {
+          category: 'Snake',
+          engine: 'snake',
+          icon: '🐍',
+          color: 'from-emerald-500 to-teal-600',
+          titles: [
+            ['Cyber Snake', 'Collect neon data nodes and grow your cybernetic tail.'],
+            ['Speed Viper', 'Overclocked grid speed for extreme snake masters.'],
+            ['Tron Trail', 'Light-cycle grid runner—never cross your own path.'],
+            ['Toxic Cobra', 'Bio-hazard arena with bonus multiplier orbs.'],
+            ['Neon Centipede', 'Fast-turning arcade worm in a compact arena.'],
+            ['Grid Eater', 'Consume power cells across the mainframes matrix.'],
+            ['Hyper Worm', 'Turbo-charged slither challenge with high rewards.'],
+            ['Maze Python', 'Navigate tight grid coordinates without crashing.'],
+            ['Laser Serpent', 'Precision 90-degree turns at escalating velocity.'],
+            ['Golden Mamba', 'High-stakes gold orb collector with rapid growth.'],
+            ['Data Leech', 'Absorb packets inside the server firewall.'],
+            ['Omega Snake', 'Ultimate championship speed snake marathon.']
+          ]
+        },
+        {
+          category: 'Breakout',
+          engine: 'breakout',
+          icon: '🧱',
+          color: 'from-amber-500 to-orange-600',
+          titles: [
+            ['Neon Breakout', 'Smash glowing cyber bricks with your deflecting paddle.'],
+            ['Fortress Smash', 'Break through 6 reinforced rows of titanium blocks.'],
+            ['Prism Breaker', 'Shatter rainbow crystal arrays at high velocity.'],
+            ['Speed Bricks', 'Fast ball physics with narrow precision paddle.'],
+            ['Chaos Arkanoid', 'High-angle ricochet action across dense brick walls.'],
+            ['Laser Paddle', 'Deflect plasma spheres into the reactor core wall.'],
+            ['Titanium Wall', 'Multi-layer brick siege with bonus score combos.'],
+            ['Cyber Pong Solo', 'Keep the energy orb alive while clearing the ceiling.'],
+            ['Hyper Ricochet', 'Extreme bounce angles for nonstop arcade destruction.'],
+            ['Reactor Breach', 'Destroy the shield blocks protecting the mainframe.'],
+            ['Glass Tower', 'Clear fragile crystal rows in record time.'],
+            ['Ultra Breaker', 'Master-level brick demolition challenge.']
+          ]
+        },
+        {
+          category: 'Racing',
+          engine: 'racing',
+          icon: '🏎️',
+          color: 'from-rose-500 to-red-600',
+          titles: [
+            ['Nitro Highway', 'Weave through heavy highway traffic at 200 MPH.'],
+            ['Cyber Moto', 'High-speed neon superbike lane splitter.'],
+            ['Police Chase', 'Outrun patrol interceptors on the midnight expressway.'],
+            ['Midnight Turbo', 'Synthwave night racer with dense rival cars.'],
+            ['F1 Sprint', 'Open-wheel grand prix reflex overtaker.'],
+            ['Desert Rally', 'Dusty canyon road dash against rival trucks.'],
+            ['Ice Drift', 'Slick winter highway dodging with fast lane shifts.'],
+            ['Apex Racer', 'Track-day supercar challenge—zero collisions allowed.'],
+            ['Truck Convoy', 'Navigate between massive armored highway rigs.'],
+            ['Wrong Way Blitz', 'Dodge oncoming traffic in all 4 lanes!'],
+            ['Street King', 'Underground tuner sprint for top street cred.'],
+            ['Hyper Outrun', 'Maximum velocity endurance racing simulator.']
+          ]
+        },
+        {
+          category: 'Puzzle',
+          engine: 'puzzle2048',
+          icon: '🧩',
+          color: 'from-cyan-500 to-sky-600',
+          titles: [
+            ['Cyber 2048', 'Slide and merge matching power-of-two tiles to reach 2048.'],
+            ['Binary 1024', 'Fast-paced logic merge for quick brain workouts.'],
+            ['Reactor Merge', 'Combine unstable isotopes into higher energy states.'],
+            ['Quantum Tiles', 'Strategic 4x4 grid math puzzle with combo scoring.'],
+            ['Hexa Powers', 'Double your numbers without locking the board.'],
+            ['Neural Matrix', 'Train your spatial planning on the 4x4 logic grid.'],
+            ['Infinity 4096', 'Push past 2048 for grandmaster puzzle prestige.'],
+            ['Chip Fuser', 'Merge silicon microchips to upgrade processor tiers.'],
+            ['Cube Doubler', 'Clean minimalist number combiner with instant restarts.'],
+            ['Star Merger', 'Fuse cosmic elements from protostar to supernova.'],
+            ['Vault Code', 'Crack the encrypted vault by combining matching keys.'],
+            ['Zen 2048', 'Relaxing dark-mode number puzzle with smooth controls.']
+          ]
+        },
+        {
+          category: 'Platformer',
+          engine: 'climber',
+          icon: '🦘',
+          color: 'from-lime-500 to-green-600',
+          titles: [
+            ['Neon Jumper', 'Bounce endlessly upward from platform to platform.'],
+            ['Tower Climb', 'Scale the cyber skyscraper without falling into the abyss.'],
+            ['Cloud Bounce', 'Sky-high vertical jumper with narrow floating pads.'],
+            ['Lava Escape', 'Keep jumping higher before the magma floor catches you.'],
+            ['Ninja Wall', 'Agile vertical leap across bamboo scaffolding.'],
+            ['Moon Hopper', 'Low-gravity lunar ascent with wide aerial arcs.'],
+            ['Spring Bot', 'Pogo-powered robot climbing the factory shaft.'],
+            ['Cyber Frog', 'Leap across holographic lily-pads in mid-air.'],
+            ['Sky Stairway', 'Fast-scrolling vertical platform marathon.'],
+            ['Jetpack Ascent', 'Boost from ledge to ledge in the orbital elevator.'],
+            ['Pixel Climber', 'Retro arcade high-altitude jumping challenge.'],
+            ['Summit Rush', 'Reach maximum altitude for the global crown.']
+          ]
+        },
+        {
+          category: 'Reflex',
+          engine: 'reflex',
+          icon: '🎯',
+          color: 'from-fuchsia-500 to-violet-600',
+          titles: [
+            ['Aim Trainer Pro', 'Click or tap glowing targets before they shrink away!'],
+            ['Sniper Reflex', 'High-precision target elimination under time pressure.'],
+            ['Cyber Whack', 'Tap rogue malware nodes popping up on the grid.'],
+            ['UFO Hunter', 'Intercept teleporting saucers with lightning taps.'],
+            ['Bubble Pop Blitz', 'Burst plasma orbs to build massive combo streaks.'],
+            ['Quick Draw', 'Test your millisecond reaction speed on moving bullseyes.'],
+            ['Zombie Tap', 'Stop the undead breach with rapid-fire clicks.'],
+            ['Orb Shatter', 'Crack glowing crystal spheres before the timer runs out.'],
+            ['Laser Grid Tap', 'Disarm blinking security nodes across the vault.'],
+            ['Fruit Cyber Slice', 'Tap flying neon cores for instant score bursts.'],
+            ['Bomb Defuser', 'Tap live charges before their countdown hits zero!'],
+            ['Esports Warmup', 'Pro-level cursor & touch accuracy drill.']
+          ]
+        },
+        {
+          category: 'Strategy',
+          engine: 'pong',
+          icon: '🛡️',
+          color: 'from-blue-500 to-indigo-600',
+          titles: [
+            ['Cyber Pong AI', 'Outsmart the adaptive AI paddle in high-speed laser tennis.'],
+            ['Air Hockey Pro', 'Fast table ricochets against an aggressive bot defender.'],
+            ['Core Protector', 'Defend your home goal line from accelerating energy shots.'],
+            ['Laser Tennis', 'Championship court rally with escalating ball velocity.'],
+            ['Goalie Reflex', 'Block every incoming striker shot in the penalty box.'],
+            ['Shield Duel', 'Tactical deflection battle against the nexus guardian.'],
+            ['Orbit Defense', 'Keep the plasma sphere away from your lower shield.'],
+            ['Hyper Rally', 'Endurance paddle rally—every hit awards bonus points.'],
+            ['Mech Table', 'Heavy-impact arcade sports showdown.'],
+            ['Neon Squash', 'High-tempo wall & AI rally for solo competitors.'],
+            ['Aegis Guard', 'Narrow-shield defensive mastery challenge.'],
+            ['Grand Slam AI', 'Ultimate speed AI boss match for pro players.']
+          ]
+        }
+      ];
+
+      const GAMES = [];
+      let idCounter = 1;
+      CATEGORY_DEFINITIONS.forEach((catDef, catIdx) => {
+        catDef.titles.forEach((item, variantIdx) => {
+          const difficultyMultiplier = 1 + (variantIdx * 0.08);
+          const hue = (catIdx * 40 + variantIdx * 17) % 360;
+          GAMES.push({
+            id: 'game-' + idCounter,
+            num: idCounter,
+            title: item[0],
+            desc: item[1],
+            category: catDef.category,
+            engine: catDef.engine,
+            icon: catDef.icon,
+            color: catDef.color,
+            variantIdx: variantIdx,
+            speedMult: Number(difficultyMultiplier.toFixed(2)),
+            hue: hue,
+            plays: 1400 + ((idCounter * 317) % 9800),
+            rating: (4.4 + ((idCounter * 7) % 6) * 0.1).toFixed(1),
+            sourceType: 'engine',
+            iframeUrl: ''
+          });
+          idCounter++;
+        });
+      });
+
+      // ==================== 2. PERSISTENT STATE (SAFE LOCALSTORAGE) ====================
+      const state = {
+        activeView: 'catalog',
+        selectedCategory: 'All',
+        searchQuery: '',
+        sortBy: 'popular',
+        soundEnabled: true,
+        prerollEnabled: true,
+        coins: 250,
+        adImpressions: 1,
+        highScores: {},
+        favorites: {},
+        currentGame: GAMES[0],
+        isPaused: false,
+        isGameOver: false,
+        liveScore: 0,
+        portalName: 'NEXUS ARCADE',
+        adNetwork: 'Adsterra + GameMonetize SDK',
+        pubId: ''
+      };
+
+      function loadSavedState() {
+        try {
+          const saved = localStorage.getItem('nexusplay_portal_state_v1');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            if (typeof parsed.coins === 'number') state.coins = parsed.coins;
+            if (parsed.highScores) state.highScores = parsed.highScores;
+            if (parsed.favorites) state.favorites = parsed.favorites;
+            if (parsed.portalName) state.portalName = parsed.portalName;
+            if (parsed.adNetwork) state.adNetwork = parsed.adNetwork;
+            if (Array.isArray(parsed.customGames)) {
+              parsed.customGames.forEach(cg => {
+                if (!GAMES.some(g => g.id === cg.id)) {
+                  GAMES.unshift(cg);
+                }
+              });
+            }
+          }
+        } catch (err) {
+          // Ignore storage restrictions in sandboxed environments
+        }
+      }
+
+      function saveState() {
+        try {
+          const customGames = GAMES.filter(g => g.isCustom);
+          localStorage.setItem('nexusplay_portal_state_v1', JSON.stringify({
+            coins: state.coins,
+            highScores: state.highScores,
+            favorites: state.favorites,
+            portalName: state.portalName,
+            adNetwork: state.adNetwork,
+            customGames: customGames
+          }));
+        } catch (err) {
+          // Ignore storage restrictions
+        }
+      }
+
+      // ==================== 3. SYNTHESIZED WEB AUDIO SFX ====================
+      let audioCtx = null;
+      function playSfx(type) {
+        if (!state.soundEnabled) return;
+        try {
+          if (!audioCtx) {
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) return;
+            audioCtx = new AudioContextClass();
+          }
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          const now = audioCtx.currentTime;
+
+          if (type === 'score') {
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(520, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.11);
+            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+            osc.start(now);
+            osc.stop(now + 0.12);
+          } else if (type === 'action') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(300, now);
+            osc.frequency.exponentialRampToValueAtTime(460, now + 0.07);
+            gain.gain.setValueAtTime(0.09, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+            osc.start(now);
+            osc.stop(now + 0.08);
+          } else if (type === 'gameover') {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(280, now);
+            osc.frequency.exponentialRampToValueAtTime(95, now + 0.28);
+            gain.gain.setValueAtTime(0.14, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+            osc.start(now);
+            osc.stop(now + 0.3);
+          }
+        } catch (e) {}
+      }
+
+      function showToast(msg) {
+        const el = document.getElementById('toastNotification');
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.remove('hidden');
+        setTimeout(() => el.classList.add('hidden'), 2600);
+      }
+
+      // ==================== 4. UI RENDERING & FILTERS ====================
+      const categoriesList = ['All', 'Favorites', 'Arcade', 'Shooter', 'Snake', 'Breakout', 'Racing', 'Puzzle', 'Platformer', 'Reflex', 'Strategy'];
+
+      function renderCategoryPills() {
+        const container = document.getElementById('categoryPillsContainer');
+        container.innerHTML = '';
+        categoriesList.forEach(cat => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          const isActive = state.selectedCategory === cat;
+          const count = cat === 'All'
+            ? GAMES.length
+            : cat === 'Favorites'
+              ? GAMES.filter(g => state.favorites[g.id]).length
+              : GAMES.filter(g => g.category === cat).length;
+
+          btn.className = isActive
+            ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white whitespace-nowrap shadow-sm transition'
+            : 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 whitespace-nowrap transition';
+          btn.textContent = `${cat} (${count})`;
+          btn.addEventListener('click', () => {
+            state.selectedCategory = cat;
+            renderCategoryPills();
+            renderGamesGrid();
+          });
+          container.appendChild(btn);
+        });
+      }
+
+      function getFilteredGames() {
+        const q = state.searchQuery.trim().toLowerCase();
+        let list = GAMES.filter(g => {
+          if (state.selectedCategory === 'Favorites' && !state.favorites[g.id]) return false;
+          if (state.selectedCategory !== 'All' && state.selectedCategory !== 'Favorites' && g.category !== state.selectedCategory) return false;
+          if (q && !(g.title.toLowerCase().includes(q) || g.category.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q))) return false;
+          return true;
+        });
+
+        if (state.sortBy === 'popular') {
+          list.sort((a, b) => b.plays - a.plays);
+        } else if (state.sortBy === 'rating') {
+          list.sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating));
+        } else if (state.sortBy === 'highscore') {
+          list.sort((a, b) => (state.highScores[b.id] || 0) - (state.highScores[a.id] || 0));
+        } else if (state.sortBy === 'az') {
+          list.sort((a, b) => a.title.localeCompare(b.title));
+        }
+        return list;
+      }
+
+      function renderGamesGrid() {
+        const grid = document.getElementById('gamesGrid');
+        const filtered = getFilteredGames();
+        document.getElementById('totalGameBadge').textContent = `${GAMES.length} GAMES`;
+        document.getElementById('catalogCountLabel').textContent = `Showing ${filtered.length} of ${GAMES.length} playable games`;
+
+        const resetBtn = document.getElementById('resetFiltersBtn');
+        if (state.selectedCategory !== 'All' || state.searchQuery.trim() !== '') {
+          resetBtn.classList.remove('hidden');
+        } else {
+          resetBtn.classList.add('hidden');
+        }
+
+        grid.innerHTML = '';
+        if (filtered.length === 0) {
+          grid.innerHTML = `
+            <div class="col-span-full bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-2">
+              <div class="text-3xl">🔍</div>
+              <p class="text-sm font-bold text-white">No games matched your filter</p>
+              <p class="text-xs text-slate-400">Try clearing the search query or switching back to All categories.</p>
+            </div>`;
+          return;
+        }
+
+        filtered.forEach(game => {
+          const best = state.highScores[game.id] || 0;
+          const isFav = !!state.favorites[game.id];
+          const card = document.createElement('div');
+          card.className = 'game-card group cursor-pointer rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden flex flex-col justify-between';
+          card.innerHTML = `
+            <div>
+              <div class="relative h-28 bg-gradient-to-br ${game.color} p-3 flex flex-col justify-between overflow-hidden" style="filter: hue-rotate(${game.variantIdx * 18}deg);">
+                <div class="flex items-center justify-between z-10">
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md bg-slate-950/60 text-white backdrop-blur-sm">#${game.num} • ${game.category}</span>
+                  <span class="text-xs font-bold px-1.5 py-0.5 rounded bg-slate-950/60 text-amber-300">★ ${game.rating}</span>
+                </div>
+                <div class="my-auto text-center text-4xl transform group-hover:scale-110 transition duration-200 select-none">
+                  ${game.icon}
+                </div>
+                <div class="flex items-center justify-between text-[10px] text-white/90 font-semibold z-10">
+                  <span>▶ ${(game.plays / 1000).toFixed(1)}k plays</span>
+                  ${best > 0 ? `<span class="bg-amber-500/90 text-slate-950 font-extrabold px-1.5 rounded">🏆 ${best}</span>` : `<span class="opacity-75">Speed ${game.speedMult}x</span>`}
+                </div>
+              </div>
+              <div class="p-3 space-y-1">
+                <div class="flex items-center justify-between gap-1">
+                  <h3 class="text-xs sm:text-sm font-extrabold text-white truncate">${game.title}</h3>
+                  <span class="text-xs ${isFav ? 'text-amber-400' : 'text-slate-600'}">${isFav ? '★' : ''}</span>
+                </div>
+                <p class="text-[11px] text-slate-400 line-clamp-2 leading-snug">${game.desc}</p>
+              </div>
+            </div>
+            <div class="px-3 pb-3 pt-1">
+              <button type="button" class="w-full py-1.5 rounded-xl bg-slate-800 group-hover:bg-indigo-600 text-slate-200 group-hover:text-white font-bold text-xs transition">
+                Play Now
+              </button>
+            </div>
+          `;
+          card.addEventListener('click', () => openGamePlayer(game));
+          grid.appendChild(card);
+        });
+      }
+
+      // ==================== 5. VIEW NAVIGATION ====================
+      function switchView(viewName) {
+        state.activeView = viewName;
+        document.getElementById('viewCatalog').classList.toggle('hidden', viewName !== 'catalog');
+        document.getElementById('viewPlayer').classList.toggle('hidden', viewName !== 'player');
+        document.getElementById('viewPublish').classList.toggle('hidden', viewName !== 'publish');
+        document.getElementById('viewMonetize').classList.toggle('hidden', viewName !== 'monetize');
+
+        if (viewName !== 'player') {
+          stopGameLoop();
+        }
+      }
+
+      // ==================== 6. MULTI-GENRE 60FPS HTML5 CANVAS ENGINE ====================
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+      let animFrameId = null;
+      let prerollTimerId = null;
+      const keys = {};
+      let engineState = {};
+
+      function resizeCanvas() {
+        const container = document.getElementById('canvasContainer');
+        if (!container) return;
+        const rect = container.getBoundingClientRect();
+        canvas.width = Math.max(320, Math.floor(rect.width));
+        canvas.height = Math.max(260, Math.floor(rect.height));
+      }
+
+      function stopGameLoop() {
+        if (animFrameId) {
+          cancelAnimationFrame(animFrameId);
+          animFrameId = null;
+        }
+        if (prerollTimerId) {
+          clearInterval(prerollTimerId);
+          prerollTimerId = null;
+        }
+      }
+
+      function updateScoreUI(newScore) {
+        state.liveScore = Math.floor(newScore);
+        document.getElementById('liveScoreDisplay').textContent = state.liveScore;
+        const gId = state.currentGame.id;
+        const prevBest = state.highScores[gId] || 0;
+        if (state.liveScore > prevBest) {
+          state.highScores[gId] = state.liveScore;
+          document.getElementById('bestScoreDisplay').textContent = state.liveScore;
+          saveState();
+        }
+      }
+
+      function triggerGameOver() {
+        state.isGameOver = true;
+        playSfx('gameover');
+        document.getElementById('gameOverHeading').textContent = 'GAME OVER';
+        document.getElementById('gameOverSubtext').textContent = `Final Score: ${state.liveScore} • Best: ${state.highScores[state.currentGame.id] || state.liveScore}`;
+        document.getElementById('gameOverOverlay').classList.remove('hidden');
+      }
+
+      function openGamePlayer(game) {
+        state.currentGame = game;
+        game.plays += 1;
+        state.adImpressions += 1;
+        document.getElementById('adImpressionCounter').textContent = state.adImpressions;
+
+        switchView('player');
+        resizeCanvas();
+
+        document.getElementById('playerGameTitle').textContent = game.title;
+        document.getElementById('playerGameCategory').textContent = `${game.category} • #${game.num}`;
+        document.getElementById('playerGameDesc').textContent = game.desc;
+        document.getElementById('bestScoreDisplay').textContent = state.highScores[game.id] || 0;
+        updateFavButtonUI();
+        renderRelatedGames(game);
+
+        const iframeEl = document.getElementById('externalGameIframe');
+        if (game.sourceType === 'iframe' && game.iframeUrl) {
+          canvas.classList.add('hidden');
+          iframeEl.classList.remove('hidden');
+          iframeEl.src = game.iframeUrl;
+          document.getElementById('prerollAdOverlay').classList.add('hidden');
+          document.getElementById('gameOverOverlay').classList.add('hidden');
+          return;
+        } else {
+          iframeEl.classList.add('hidden');
+          iframeEl.src = 'about:blank';
+          canvas.classList.remove('hidden');
+        }
+
+        if (state.prerollEnabled) {
+          runPrerollAdThenStart();
+        } else {
+          initAndStartCurrentGame();
+        }
+      }
+
+      function runPrerollAdThenStart() {
+        stopGameLoop();
+        const overlay = document.getElementById('prerollAdOverlay');
+        const countdownEl = document.getElementById('prerollCountdownText');
+        overlay.classList.remove('hidden');
+        document.getElementById('gameOverOverlay').classList.add('hidden');
+        let sec = 2;
+        countdownEl.textContent = `Ad auto-closes in ${sec}s...`;
+        prerollTimerId = setInterval(() => {
+          sec -= 1;
+          if (sec <= 0) {
+            clearInterval(prerollTimerId);
+            prerollTimerId = null;
+            overlay.classList.add('hidden');
+            initAndStartCurrentGame();
+          } else {
+            countdownEl.textContent = `Ad auto-closes in ${sec}s...`;
+          }
+        }, 800);
+      }
+
+      function renderRelatedGames(currentGame) {
+        const container = document.getElementById('relatedGamesList');
+        container.innerHTML = '';
+        const related = GAMES.filter(g => g.category === currentGame.category && g.id !== currentGame.id).slice(0, 5);
+        related.forEach(g => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'w-full flex items-center justify-between p-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 text-left transition';
+          btn.innerHTML = `
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="text-lg">${g.icon}</span>
+              <div class="truncate">
+                <div class="text-xs font-bold text-white truncate">${g.title}</div>
+                <div class="text-[10px] text-slate-400">Speed ${g.speedMult}x • ★ ${g.rating}</div>
+              </div>
+            </div>
+            <span class="text-xs text-indigo-400 font-bold ml-2">Play →</span>
+          `;
+          btn.addEventListener('click', () => openGamePlayer(g));
+          container.appendChild(btn);
+        });
+      }
+
+      function updateFavButtonUI() {
+        const btn = document.getElementById('favoriteGameBtn');
+        const isFav = !!state.favorites[state.currentGame.id];
+        btn.textContent = isFav ? '★ Saved' : '☆ Save';
+        btn.className = isFav
+          ? 'px-2.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold transition'
+          : 'px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold transition';
+      }
+
+      // Initialize current game engine state
+      function initAndStartCurrentGame() {
+        stopGameLoop();
+        resizeCanvas();
+        state.isPaused = false;
+        state.isGameOver = false;
+        document.getElementById('pauseGameBtn').textContent = '⏸ Pause';
+        document.getElementById('gameOverOverlay').classList.add('hidden');
+        document.getElementById('prerollAdOverlay').classList.add('hidden');
+        updateScoreUI(0);
+
+        const g = state.currentGame;
+        const W = canvas.width;
+        const H = canvas.height;
+        const spd = g.speedMult;
+
+        if (g.engine === 'flappy') {
+          engineState = {
+            birdY: H / 2,
+            birdV: 0,
+            gravity: 0.36 * spd,
+            jump: -6.8,
+            pipes: [],
+            frame: 0,
+            gap: Math.max(95, 138 - g.variantIdx * 3)
+          };
+        } else if (g.engine === 'shooter') {
+          engineState = {
+            px: W / 2,
+            bullets: [],
+            enemies: [],
+            stars: Array.from({ length: 35 }, () => ({ x: Math.random() * W, y: Math.random() * H, s: 1 + Math.random() * 2 })),
+            frame: 0
+          };
+        } else if (g.engine === 'snake') {
+          const cols = 24;
+          const rows = 16;
+          engineState = {
+            cols,
+            rows,
+            snake: [{ x: 10, y: 8 }, { x: 9, y: 8 }, { x: 8, y: 8 }],
+            dir: { x: 1, y: 0 },
+            nextDir: { x: 1, y: 0 },
+            food: { x: 15, y: 8 },
+            tickCounter: 0,
+            tickInterval: Math.max(4, Math.round(8 - g.variantIdx * 0.3))
+          };
+        } else if (g.engine === 'breakout') {
+          const bricks = [];
+          const rows = 4 + (g.variantIdx % 3);
+          const cols = 8;
+          const pad = 8;
+          const bw = (W - pad * (cols + 1)) / cols;
+          for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+              bricks.push({ x: pad + c * (bw + pad), y: 42 + r * 24, w: bw, h: 16, alive: true, row: r });
+            }
+          }
+          engineState = {
+            paddleX: W / 2 - 52,
+            paddleW: Math.max(72, 110 - g.variantIdx * 3),
+            bx: W / 2,
+            by: H - 50,
+            vx: 3.8 * spd,
+            vy: -3.8 * spd,
+            bricks
+          };
+        } else if (g.engine === 'racing') {
+          engineState = {
+            lane: 1,
+            carX: W / 2,
+            obstacles: [],
+            roadOffset: 0,
+            frame: 0
+          };
+        } else if (g.engine === 'puzzle2048') {
+          const grid = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+          ];
+          spawn2048Tile(grid);
+          spawn2048Tile(grid);
+          engineState = { grid };
+        } else if (g.engine === 'climber') {
+          const platforms = [];
+          for (let i = 0; i < 8; i++) {
+            platforms.push({ x: Math.random() * (W - 85), y: H - 40 - i * 55, w: 80 });
+          }
+          platforms[0].x = W / 2 - 40;
+          engineState = {
+            px: W / 2,
+            py: H - 70,
+            vx: 0,
+            vy: -8,
+            platforms
+          };
+        } else if (g.engine === 'reflex') {
+          engineState = {
+            targets: [],
+            timeLeft: 30 * 60,
+            frame: 0
+          };
+          spawnReflexTarget();
+          spawnReflexTarget();
+        } else if (g.engine === 'pong') {
+          engineState = {
+            px: W / 2 - 50,
+            aiX: W / 2 - 50,
+            bx: W / 2,
+            by: H / 2,
+            vx: 4.2 * spd,
+            vy: 4.2 * spd,
+            pw: 96
+          };
+        }
+
+        animFrameId = requestAnimationFrame(gameLoop);
+      }
+
+      function spawn2048Tile(grid) {
+        const empty = [];
+        for (let r = 0; r < 4; r++) {
+          for (let c = 0; c < 4; c++) {
+            if (grid[r][c] === 0) empty.push([r, c]);
+          }
+        }
+        if (empty.length > 0) {
+          const [r, c] = empty[Math.floor(Math.random() * empty.length)];
+          grid[r][c] = Math.random() < 0.85 ? 2 : 4;
+        }
+      }
+
+      function slide2048(dir) {
+        if (state.currentGame.engine !== 'puzzle2048' || state.isGameOver || state.isPaused) return;
+        const g = engineState.grid;
+        let moved = false;
+        let gained = 0;
+
+        function processLine(line) {
+          const nonZero = line.filter(v => v !== 0);
+          const merged = [];
+          for (let i = 0; i < nonZero.length; i++) {
+            if (i + 1 < nonZero.length && nonZero[i] === nonZero[i + 1]) {
+              const val = nonZero[i] * 2;
+              merged.push(val);
+              gained += val;
+              i++;
+            } else {
+              merged.push(nonZero[i]);
+            }
+          }
+          while (merged.length < 4) merged.push(0);
+          return merged;
+        }
+
+        if (dir === 'left' || dir === 'right') {
+          for (let r = 0; r < 4; r++) {
+            const row = dir === 'left' ? g[r].slice() : g[r].slice().reverse();
+            const next = processLine(row);
+            if (dir === 'right') next.reverse();
+            if (next.join(',') !== g[r].join(',')) moved = true;
+            g[r] = next;
+          }
+        } else {
+          for (let c = 0; c < 4; c++) {
+            const col = [g[0][c], g[1][c], g[2][c], g[3][c]];
+            if (dir === 'down') col.reverse();
+            const next = processLine(col);
+            if (dir === 'down') next.reverse();
+            for (let r = 0; r < 4; r++) {
+              if (g[r][c] !== next[r]) moved = true;
+              g[r][c] = next[r];
+            }
+          }
+        }
+
+        if (moved) {
+          spawn2048Tile(g);
+          playSfx('score');
+          updateScoreUI(state.liveScore + gained);
+        }
+      }
+
+      function spawnReflexTarget() {
+        const W = canvas.width;
+        const H = canvas.height;
+        engineState.targets.push({
+          x: 50 + Math.random() * (W - 100),
+          y: 50 + Math.random() * (H - 100),
+          r: 28,
+          maxR: 32
+        });
+      }
+
+      function handlePlayerAction(x, y) {
+        if (state.isGameOver || state.isPaused) return;
+        const g = state.currentGame;
+        if (g.engine === 'flappy') {
+          engineState.birdV = engineState.jump;
+          playSfx('action');
+        } else if (g.engine === 'shooter') {
+          engineState.bullets.push({ x: engineState.px, y: canvas.height - 48 });
+          playSfx('action');
+        } else if (g.engine === 'reflex') {
+          const rect = canvas.getBoundingClientRect();
+          const cx = x !== undefined ? x - rect.left : canvas.width / 2;
+          const cy = y !== undefined ? y - rect.top : canvas.height / 2;
+          for (let i = engineState.targets.length - 1; i >= 0; i--) {
+            const t = engineState.targets[i];
+            const dist = Math.hypot(cx - t.x, cy - t.y);
+            if (dist <= t.r + 12) {
+              engineState.targets.splice(i, 1);
+              updateScoreUI(state.liveScore + 25);
+              playSfx('score');
+              spawnReflexTarget();
+              break;
+            }
+          }
+        } else if (g.engine === 'puzzle2048') {
+          slide2048('up');
+        }
+      }
+
+      function gameLoop() {
+        if (state.activeView !== 'player') return;
+        const W = canvas.width;
+        const H = canvas.height;
+        const g = state.currentGame;
+        const spd = g.speedMult;
+
+        if (!state.isPaused && !state.isGameOver) {
+          // Clear background with subtle game-specific tint
+          ctx.fillStyle = '#090d16';
+          ctx.fillRect(0, 0, W, H);
+
+          // ---- ENGINE 1: FLAPPY / CYBER RUNNER ----
+          if (g.engine === 'flappy') {
+            engineState.frame++;
+            engineState.birdV += engineState.gravity;
+            engineState.birdY += engineState.birdV;
+
+            if (engineState.frame % Math.max(55, Math.floor(85 / spd)) === 0) {
+              const topH = 40 + Math.random() * (H - engineState.gap - 90);
+              engineState.pipes.push({ x: W, topH, passed: false });
+            }
+
+            ctx.fillStyle = `hsl(${g.hue}, 80%, 55%)`;
+            for (let i = engineState.pipes.length - 1; i >= 0; i--) {
+              const p = engineState.pipes[i];
+              p.x -= 3.2 * spd;
+              ctx.fillRect(p.x, 0, 44, p.topH);
+              ctx.fillRect(p.x, p.topH + engineState.gap, 44, H - (p.topH + engineState.gap));
+
+              if (!p.passed && p.x + 44 < 90) {
+                p.passed = true;
+                updateScoreUI(state.liveScore + 10);
+                playSfx('score');
+              }
+              if (90 + 14 > p.x && 90 - 14 < p.x + 44) {
+                if (engineState.birdY - 12 < p.topH || engineState.birdY + 12 > p.topH + engineState.gap) {
+                  triggerGameOver();
+                }
+              }
+              if (p.x < -50) engineState.pipes.splice(i, 1);
+            }
+
+            // Draw player
+            ctx.fillStyle = '#38bdf8';
+            ctx.beginPath();
+            ctx.arc(90, engineState.birdY, 14, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (engineState.birdY > H - 10 || engineState.birdY < 10) {
+              triggerGameOver();
+            }
+          }
+
+          // ---- ENGINE 2: SPACE SHOOTER ----
+          else if (g.engine === 'shooter') {
+            engineState.frame++;
+            if (keys['ArrowLeft'] || keys['KeyA']) engineState.px = Math.max(26, engineState.px - 6 * spd);
+            if (keys['ArrowRight'] || keys['KeyD']) engineState.px = Math.min(W - 26, engineState.px + 6 * spd);
+
+            if (engineState.frame % 14 === 0) {
+              engineState.bullets.push({ x: engineState.px, y: H - 46 });
+            }
+            if (engineState.frame % Math.max(22, Math.floor(42 / spd)) === 0) {
+              engineState.enemies.push({ x: 30 + Math.random() * (W - 60), y: -20, r: 16 });
+            }
+
+            ctx.fillStyle = '#475569';
+            engineState.stars.forEach(s => {
+              s.y = (s.y + s.s) % H;
+              ctx.fillRect(s.x, s.y, 2, 2);
+            });
+
+            // Bullets
+            ctx.fillStyle = '#facc15';
+            for (let i = engineState.bullets.length - 1; i >= 0; i--) {
+              const b = engineState.bullets[i];
+              b.y -= 8.5;
+              ctx.fillRect(b.x - 2, b.y, 4, 12);
+              if (b.y < -15) engineState.bullets.splice(i, 1);
+            }
+
+            // Enemies
+            ctx.fillStyle = `hsl(${g.hue}, 85%, 60%)`;
+            for (let i = engineState.enemies.length - 1; i >= 0; i--) {
+              const e = engineState.enemies[i];
+              e.y += 2.4 * spd;
+              ctx.beginPath();
+              ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+              ctx.fill();
+
+              for (let j = engineState.bullets.length - 1; j >= 0; j--) {
+                const b = engineState.bullets[j];
+                if (Math.hypot(e.x - b.x, e.y - b.y) < e.r + 5) {
+                  engineState.enemies.splice(i, 1);
+                  engineState.bullets.splice(j, 1);
+                  updateScoreUI(state.liveScore + 15);
+                  playSfx('score');
+                  break;
+                }
+              }
+              if (e && e.y > H - 25) {
+                triggerGameOver();
+              }
+            }
+
+            // Player Ship
+            ctx.fillStyle = '#818cf8';
+            ctx.beginPath();
+            ctx.moveTo(engineState.px, H - 52);
+            ctx.lineTo(engineState.px - 18, H - 22);
+            ctx.lineTo(engineState.px + 18, H - 22);
+            ctx.closePath();
+            ctx.fill();
+          }
+
+          // ---- ENGINE 3: SNAKE ----
+          else if (g.engine === 'snake') {
+            engineState.tickCounter++;
+            if (engineState.tickCounter >= engineState.tickInterval) {
+              engineState.tickCounter = 0;
+              engineState.dir = engineState.nextDir;
+              const head = {
+                x: (engineState.snake[0].x + engineState.dir.x + engineState.cols) % engineState.cols,
+                y: (engineState.snake[0].y + engineState.dir.y + engineState.rows) % engineState.rows
+              };
+
+              if (engineState.snake.some(seg => seg.x === head.x && seg.y === head.y)) {
+                triggerGameOver();
+              } else {
+                engineState.snake.unshift(head);
+                if (head.x === engineState.food.x && head.y === engineState.food.y) {
+                  updateScoreUI(state.liveScore + 20);
+                  playSfx('score');
+                  engineState.food = {
+                    x: Math.floor(Math.random() * engineState.cols),
+                    y: Math.floor(Math.random() * engineState.rows)
+                  };
+                } else {
+                  engineState.snake.pop();
+                }
+              }
+            }
+
+            const cw = W / engineState.cols;
+            const ch = H / engineState.rows;
+            ctx.fillStyle = '#f43f5e';
+            ctx.fillRect(engineState.food.x * cw + 2, engineState.food.y * ch + 2, cw - 4, ch - 4);
+
+            engineState.snake.forEach((seg, idx) => {
+              ctx.fillStyle = idx === 0 ? '#34d399' : `hsl(${g.hue}, 75%, 50%)`;
+              ctx.fillRect(seg.x * cw + 1, seg.y * ch + 1, cw - 2, ch - 2);
+            });
+          }
+
+          // ---- ENGINE 4: BREAKOUT ----
+          else if (g.engine === 'breakout') {
+            if (keys['ArrowLeft'] || keys['KeyA']) engineState.paddleX = Math.max(10, engineState.paddleX - 7 * spd);
+            if (keys['ArrowRight'] || keys['KeyD']) engineState.paddleX = Math.min(W - engineState.paddleW - 10, engineState.paddleX + 7 * spd);
+
+            engineState.bx += engineState.vx;
+            engineState.by += engineState.vy;
+
+            if (engineState.bx < 10 || engineState.bx > W - 10) engineState.vx *= -1;
+            if (engineState.by < 10) engineState.vy *= -1;
+
+            if (
+              engineState.by > H - 36 &&
+              engineState.bx >= engineState.paddleX &&
+              engineState.bx <= engineState.paddleX + engineState.paddleW
+            ) {
+              engineState.vy = -Math.abs(engineState.vy);
+              playSfx('action');
+            }
+
+            if (engineState.by > H) {
+              triggerGameOver();
+            }
+
+            let aliveCount = 0;
+            engineState.bricks.forEach(b => {
+              if (!b.alive) return;
+              aliveCount++;
+              ctx.fillStyle = `hsl(${(g.hue + b.row * 25) % 360}, 80%, 58%)`;
+              ctx.fillRect(b.x, b.y, b.w, b.h);
+              if (
+                engineState.bx > b.x &&
+                engineState.bx < b.x + b.w &&
+                engineState.by > b.y &&
+                engineState.by < b.y + b.h
+              ) {
+                b.alive = false;
+                engineState.vy *= -1;
+                updateScoreUI(state.liveScore + 15);
+                playSfx('score');
+              }
+            });
+
+            if (aliveCount === 0) {
+              engineState.bricks.forEach(b => (b.alive = true));
+            }
+
+            ctx.fillStyle = '#38bdf8';
+            ctx.fillRect(engineState.paddleX, H - 28, engineState.paddleW, 12);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(engineState.bx, engineState.by, 7, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // ---- ENGINE 5: RACING ----
+          else if (g.engine === 'racing') {
+            engineState.frame++;
+            const roadLeft = W * 0.2;
+            const roadW = W * 0.6;
+            if (keys['ArrowLeft'] || keys['KeyA']) engineState.carX = Math.max(roadLeft + 24, engineState.carX - 6 * spd);
+            if (keys['ArrowRight'] || keys['KeyD']) engineState.carX = Math.min(roadLeft + roadW - 24, engineState.carX + 6 * spd);
+
+            ctx.fillStyle = '#1e293b';
+            ctx.fillRect(roadLeft, 0, roadW, H);
+
+            ctx.strokeStyle = '#fbbf24';
+            ctx.setLineDash([20, 20]);
+            ctx.beginPath();
+            ctx.moveTo(W / 2, 0);
+            ctx.lineTo(W / 2, H);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            if (engineState.frame % Math.max(28, Math.floor(48 / spd)) === 0) {
+              engineState.obstacles.push({
+                x: roadLeft + 30 + Math.random() * (roadW - 60),
+                y: -40
+              });
+            }
+
+            ctx.fillStyle = '#f43f5e';
+            for (let i = engineState.obstacles.length - 1; i >= 0; i--) {
+              const ob = engineState.obstacles[i];
+              ob.y += 4.8 * spd;
+              ctx.fillRect(ob.x - 16, ob.y - 24, 32, 48);
+
+              if (Math.abs(ob.x - engineState.carX) < 28 && Math.abs(ob.y - (H - 55)) < 42) {
+                triggerGameOver();
+              }
+              if (ob.y > H + 40) {
+                engineState.obstacles.splice(i, 1);
+                updateScoreUI(state.liveScore + 10);
+              }
+            }
+
+            ctx.fillStyle = '#22d3ee';
+            ctx.fillRect(engineState.carX - 16, H - 80, 32, 50);
+          }
+
+          // ---- ENGINE 6: PUZZLE 2048 ----
+          else if (g.engine === 'puzzle2048') {
+            const size = Math.min(W, H) * 0.78;
+            const startX = (W - size) / 2;
+            const startY = (H - size) / 2;
+            const cellS = size / 4;
+
+            for (let r = 0; r < 4; r++) {
+              for (let c = 0; c < 4; c++) {
+                const val = engineState.grid[r][c];
+                ctx.fillStyle = val === 0 ? '#1e293b' : `hsl(${(g.hue + Math.log2(val) * 28) % 360}, 70%, 45%)`;
+                ctx.fillRect(startX + c * cellS + 4, startY + r * cellS + 4, cellS - 8, cellS - 8);
+                if (val > 0) {
+                  ctx.fillStyle = '#ffffff';
+                  ctx.font = 'bold 20px Inter, sans-serif';
+                  ctx.textAlign = 'center';
+                  ctx.textBaseline = 'middle';
+                  ctx.fillText(String(val), startX + c * cellS + cellS / 2, startY + r * cellS + cellS / 2);
+                }
+              }
+            }
+          }
+
+          // ---- ENGINE 7: PLATFORM CLIMBER ----
+          else if (g.engine === 'climber') {
+            if (keys['ArrowLeft'] || keys['KeyA']) engineState.px -= 5.5 * spd;
+            if (keys['ArrowRight'] || keys['KeyD']) engineState.px += 5.5 * spd;
+            engineState.vy += 0.32;
+            engineState.py += engineState.vy;
+
+            if (engineState.py < H * 0.42 && engineState.vy < 0) {
+              const shift = -engineState.vy;
+              engineState.py += shift;
+              updateScoreUI(state.liveScore + shift * 0.4);
+              engineState.platforms.forEach(p => {
+                p.y += shift;
+                if (p.y > H) {
+                  p.y = 0;
+                  p.x = Math.random() * (W - p.w);
+                }
+              });
+            }
+
+            ctx.fillStyle = `hsl(${g.hue}, 75%, 55%)`;
+            engineState.platforms.forEach(p => {
+              ctx.fillRect(p.x, p.y, p.w, 12);
+              if (
+                engineState.vy > 0 &&
+                engineState.px > p.x - 10 &&
+                engineState.px < p.x + p.w + 10 &&
+                engineState.py + 14 >= p.y &&
+                engineState.py + 14 <= p.y + 16
+              ) {
+                engineState.vy = -8.8;
+                playSfx('action');
+              }
+            });
+
+            ctx.fillStyle = '#a3e635';
+            ctx.beginPath();
+            ctx.arc(engineState.px, engineState.py, 14, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (engineState.py > H + 20) triggerGameOver();
+          }
+
+          // ---- ENGINE 8: REFLEX TARGETS ----
+          else if (g.engine === 'reflex') {
+            engineState.timeLeft--;
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 14px Inter, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(`Time Left: ${Math.ceil(engineState.timeLeft / 60)}s (Tap Glowing Orbs!)`, 18, 28);
+
+            engineState.targets.forEach(t => {
+              ctx.fillStyle = `hsl(${g.hue}, 85%, 60%)`;
+              ctx.beginPath();
+              ctx.arc(t.x, t.y, t.r, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.strokeStyle = '#ffffff';
+              ctx.lineWidth = 2;
+              ctx.stroke();
+            });
+
+            if (engineState.timeLeft <= 0) triggerGameOver();
+          }
+
+          // ---- ENGINE 9: STRATEGY / PONG AI ----
+          else if (g.engine === 'pong') {
+            if (keys['ArrowLeft'] || keys['KeyA']) engineState.px = Math.max(10, engineState.px - 7 * spd);
+            if (keys['ArrowRight'] || keys['KeyD']) engineState.px = Math.min(W - engineState.pw - 10, engineState.px + 7 * spd);
+
+            // AI tracks ball
+            const aiCenter = engineState.aiX + engineState.pw / 2;
+            if (aiCenter < engineState.bx - 6) engineState.aiX += 3.6 * spd;
+            if (aiCenter > engineState.bx + 6) engineState.aiX -= 3.6 * spd;
+
+            engineState.bx += engineState.vx;
+            engineState.by += engineState.vy;
+
+            if (engineState.bx < 10 || engineState.bx > W - 10) engineState.vx *= -1;
+            if (engineState.by < 34 && engineState.bx >= engineState.aiX && engineState.bx <= engineState.aiX + engineState.pw) {
+              engineState.vy = Math.abs(engineState.vy);
+            }
+            if (engineState.by < 0) {
+              updateScoreUI(state.liveScore + 50);
+              engineState.bx = W / 2;
+              engineState.by = H / 2;
+            }
+            if (
+              engineState.by > H - 36 &&
+              engineState.bx >= engineState.px &&
+              engineState.bx <= engineState.px + engineState.pw
+            ) {
+              engineState.vy = -Math.abs(engineState.vy);
+              updateScoreUI(state.liveScore + 15);
+              playSfx('score');
+            }
+            if (engineState.by > H) triggerGameOver();
+
+            ctx.fillStyle = '#f43f5e';
+            ctx.fillRect(engineState.aiX, 20, engineState.pw, 12);
+            ctx.fillStyle = '#38bdf8';
+            ctx.fillRect(engineState.px, H - 28, engineState.pw, 12);
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(engineState.bx, engineState.by, 8, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        animFrameId = requestAnimationFrame(gameLoop);
+      }
+
+      // ==================== 7. EVENT LISTENERS ====================
+      window.addEventListener('keydown', e => {
+        keys[e.code] = true;
+        if (state.activeView === 'player') {
+          if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+            e.preventDefault();
+          }
+          if (state.currentGame.engine === 'snake') {
+            if ((e.code === 'ArrowUp' || e.code === 'KeyW') && engineState.dir.y === 0) engineState.nextDir = { x: 0, y: -1 };
+            if ((e.code === 'ArrowDown' || e.code === 'KeyS') && engineState.dir.y === 0) engineState.nextDir = { x: 0, y: 1 };
+            if ((e.code === 'ArrowLeft' || e.code === 'KeyA') && engineState.dir.x === 0) engineState.nextDir = { x: -1, y: 0 };
+            if ((e.code === 'ArrowRight' || e.code === 'KeyD') && engineState.dir.x === 0) engineState.nextDir = { x: 1, y: 0 };
+          } else if (state.currentGame.engine === 'puzzle2048') {
+            if (e.code === 'ArrowUp' || e.code === 'KeyW') slide2048('up');
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') slide2048('down');
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') slide2048('left');
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') slide2048('right');
+          } else if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+            handlePlayerAction();
+          }
+        }
+      });
+
+      window.addEventListener('keyup', e => {
+        keys[e.code] = false;
+      });
+
+      canvas.addEventListener('pointerdown', e => {
+        handlePlayerAction(e.clientX, e.clientY);
+      });
+
+      // Touch D-Pad bindings
+      function bindHoldButton(btnId, keyCode, snakeDir, dir2048) {
+        const btn = document.getElementById(btnId);
+        btn.addEventListener('pointerdown', () => {
+          keys[keyCode] = true;
+          if (state.currentGame.engine === 'snake' && snakeDir) {
+            if ((snakeDir.x !== 0 && engineState.dir.x === 0) || (snakeDir.y !== 0 && engineState.dir.y === 0)) {
+              engineState.nextDir = snakeDir;
+            }
+          }
+          if (state.currentGame.engine === 'puzzle2048' && dir2048) {
+            slide2048(dir2048);
+          }
+        });
+        btn.addEventListener('pointerup', () => (keys[keyCode] = false));
+        btn.addEventListener('pointerleave', () => (keys[keyCode] = false));
+      }
+
+      bindHoldButton('touchLeftBtn', 'ArrowLeft', { x: -1, y: 0 }, 'left');
+      bindHoldButton('touchRightBtn', 'ArrowRight', { x: 1, y: 0 }, 'right');
+      bindHoldButton('touchUpBtn', 'ArrowUp', { x: 0, y: -1 }, 'up');
+      bindHoldButton('touchDownBtn', 'ArrowDown', { x: 0, y: 1 }, 'down');
+
+      document.getElementById('touchActionBtn').addEventListener('click', () => handlePlayerAction());
+
+      // Top bar & Navigation
+      document.getElementById('brandHomeBtn').addEventListener('click', () => switchView('catalog'));
+      document.getElementById('navCatalogBtn').addEventListener('click', () => switchView('catalog'));
+      document.getElementById('navPublishBtn').addEventListener('click', () => switchView('publish'));
+      document.getElementById('navMonetizeBtn').addEventListener('click', () => switchView('monetize'));
+      document.getElementById('heroPublishBtn').addEventListener('click', () => switchView('publish'));
+      document.getElementById('configureTopAdBtn').addEventListener('click', () => switchView('monetize'));
+      document.getElementById('openMonetizeFromBannerBtn').addEventListener('click', () => switchView('monetize'));
+      document.getElementById('backToCatalogBtn').addEventListener('click', () => {
+        switchView('catalog');
+        renderGamesGrid();
+      });
+
+      // Search & Sort
+      const searchInput = document.getElementById('searchInput');
+      const clearSearchBtn = document.getElementById('clearSearchBtn');
+      searchInput.addEventListener('input', e => {
+        state.searchQuery = e.target.value;
+        clearSearchBtn.classList.toggle('hidden', state.searchQuery === '');
+        if (state.activeView !== 'catalog') switchView('catalog');
+        renderGamesGrid();
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        state.searchQuery = '';
+        searchInput.value = '';
+        clearSearchBtn.classList.add('hidden');
+        renderGamesGrid();
+      });
+
+      document.getElementById('resetFiltersBtn').addEventListener('click', () => {
+        state.selectedCategory = 'All';
+        state.searchQuery = '';
+        searchInput.value = '';
+        clearSearchBtn.classList.add('hidden');
+        renderCategoryPills();
+        renderGamesGrid();
+      });
+
+      document.getElementById('sortSelect').addEventListener('change', e => {
+        state.sortBy = e.target.value;
+        renderGamesGrid();
+      });
+
+      // Random Game
+      document.getElementById('surpriseGameBtn').addEventListener('click', () => {
+        const randomGame = GAMES[Math.floor(Math.random() * GAMES.length)];
+        openGamePlayer(randomGame);
+      });
+
+      // Sound Toggle
+      document.getElementById('soundToggleBtn').addEventListener('click', e => {
+        state.soundEnabled = !state.soundEnabled;
+        e.currentTarget.textContent = state.soundEnabled ? '🔊 SFX On' : '🔇 Muted';
+      });
+
+      // Rewarded Ad Coins
+      document.getElementById('watchRewardAdBtn').addEventListener('click', () => {
+        state.coins += 50;
+        state.adImpressions += 1;
+        document.getElementById('userCoinsDisplay').textContent = state.coins;
+        saveState();
+        playSfx('score');
+        showToast('Rewarded Ad Completed! +50 Coins Added');
+      });
+
+      // Player Controls
+      document.getElementById('pauseGameBtn').addEventListener('click', e => {
+        state.isPaused = !state.isPaused;
+        e.currentTarget.textContent = state.isPaused ? '▶ Resume' : '⏸ Pause';
+      });
+
+      document.getElementById('restartGameBtn').addEventListener('click', () => initAndStartCurrentGame());
+      document.getElementById('playAgainOverlayBtn').addEventListener('click', () => initAndStartCurrentGame());
+      document.getElementById('skipPrerollBtn').addEventListener('click', () => initAndStartCurrentGame());
+
+      document.getElementById('continueWithAdBtn').addEventListener('click', () => {
+        state.coins += 25;
+        document.getElementById('userCoinsDisplay').textContent = state.coins;
+        const keepScore = state.liveScore;
+        initAndStartCurrentGame();
+        updateScoreUI(keepScore);
+        showToast('Rewarded Ad Watched! Score Restored + 25 Coins');
+      });
+
+      document.getElementById('favoriteGameBtn').addEventListener('click', () => {
+        const id = state.currentGame.id;
+        state.favorites[id] = !state.favorites[id];
+        updateFavButtonUI();
+        renderCategoryPills();
+        saveState();
+      });
+
+      // Publish New Game Form
+      document.getElementById('newGameSourceType').addEventListener('change', e => {
+        document.getElementById('iframeUrlInputGroup').classList.toggle('hidden', e.target.value !== 'iframe');
+      });
+
+      document.getElementById('publishGameForm').addEventListener('submit', e => {
+        e.preventDefault();
+        const title = document.getElementById('newGameTitle').value.trim() || 'Custom Cyber Game';
+        const category = document.getElementById('newGameCategory').value;
+        const sourceType = document.getElementById('newGameSourceType').value;
+        const icon = document.getElementById('newGameEmoji').value.trim() || '🎮';
+        const iframeUrl = document.getElementById('newGameIframeUrl').value.trim();
+        const desc = document.getElementById('newGameDesc').value.trim() || 'Custom published HTML5 game.';
+
+        const engineMap = {
+          Arcade: 'flappy',
+          Shooter: 'shooter',
+          Snake: 'snake',
+          Breakout: 'breakout',
+          Racing: 'racing',
+          Puzzle: 'puzzle2048',
+          Platformer: 'climber',
+          Reflex: 'reflex',
+          Strategy: 'pong'
+        };
+
+        const newGame = {
+          id: 'custom-' + Date.now(),
+          num: GAMES.length + 1,
+          title,
+          desc,
+          category,
+          engine: engineMap[category] || 'flappy',
+          icon,
+          color: 'from-indigo-500 to-purple-600',
+          variantIdx: 2,
+          speedMult: 1.15,
+          hue: 210,
+          plays: 1,
+          rating: '5.0',
+          sourceType,
+          iframeUrl,
+          isCustom: true
+        };
+
+        GAMES.unshift(newGame);
+        saveState();
+        renderCategoryPills();
+        renderGamesGrid();
+        e.target.reset();
+        showToast(`Published "${title}" to Portal! (${GAMES.length} Games Total)`);
+        openGamePlayer(newGame);
+      });
+
+      // Monetization & Revenue Calculator
+      function updateRevenueCalc() {
+        const players = Number(document.getElementById('calcPlayersSlider').value);
+        const impr = Number(document.getElementById('calcImprSlider').value);
+        const ecpm = Number(document.getElementById('calcEcpmSlider').value);
+
+        document.getElementById('calcPlayersVal').textContent = players.toLocaleString();
+        document.getElementById('calcImprVal').textContent = String(impr);
+        document.getElementById('calcEcpmVal').textContent = `$${ecpm.toFixed(2)}`;
+
+        const daily = ((players * impr) / 1000) * ecpm;
+        const monthly = daily * 30;
+        document.getElementById('estDailyRev').textContent = `$${daily.toFixed(2)} / day`;
+        document.getElementById('estMonthlyRev').textContent = `$${Math.round(monthly).toLocaleString()} / mo`;
+        document.getElementById('estSessionRevBadge').textContent = `Est. Session RPM: $${ecpm.toFixed(2)}`;
+      }
+
+      document.getElementById('calcPlayersSlider').addEventListener('input', updateRevenueCalc);
+      document.getElementById('calcImprSlider').addEventListener('input', updateRevenueCalc);
+      document.getElementById('calcEcpmSlider').addEventListener('input', updateRevenueCalc);
+
+      document.getElementById('saveMonetizeConfigBtn').addEventListener('click', () => {
+        state.portalName = document.getElementById('configSiteName').value.trim() || 'NEXUS ARCADE';
+        state.adNetwork = document.getElementById('configAdNetworkSelect').value;
+        state.prerollEnabled = document.getElementById('togglePrerollCheckbox').checked;
+        document.getElementById('portalBrandTitle').textContent = state.portalName;
+        document.getElementById('topAdNetworkLabel').textContent = `${state.adNetwork} Active — High CTR Placement`;
+        saveState();
+        showToast('Monetization & Brand Settings Applied!');
+      });
+
+      document.getElementById('exportStandaloneHtmlBtn').addEventListener('click', () => {
+        const htmlBlob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+        const url = URL.createObjectURL(htmlBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'index.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Downloaded index.html ready for Netlify / GitHub Pages!');
+      });
+
+      window.addEventListener('resize', () => {
+        if (state.activeView === 'player') resizeCanvas();
+      });
+
+      // Boot application on load
+      window.onload = function() {
+        loadSavedState();
+        document.getElementById('portalBrandTitle').textContent = state.portalName;
+        document.getElementById('userCoinsDisplay').textContent = state.coins;
+        renderCategoryPills();
+        renderGamesGrid();
+        updateRevenueCalc();
+      };
+    })();
+  </script>
+</body>
+</html>
